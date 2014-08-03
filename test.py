@@ -10,6 +10,7 @@ import subprocess
 import threading
 
 SCREENSHOT_DIRECTORY = "screenshots"
+URL_TO_TEST = 'http://jsfiddle.net/EtW7d/show/'
 
 class UITest:
   
@@ -34,17 +35,18 @@ class UITest:
     
     browser = webdriver.Chrome()
     #take a base screenshot first
-    browser.get('http://jsfiddle.net/EtW7d/show/')
+    browser.get(URL_TO_TEST)
     browser.save_screenshot(SCREENSHOT_DIRECTORY+'/'+self.folder_uuid+'/base.png')
-    #browser.execute_script('document.writeln("a")')
 
     script_inc = '(function() { var js = document.createElement("script"); js.type = "text/javascript"; js.src= "http://localhost:8000/monkey_test.js"; document.body.appendChild(js); })()'
     browser.execute_script(script_inc)
-    #start making modificatons
-    time.sleep(1)
-    browser.save_screenshot(SCREENSHOT_DIRECTORY+'/'+self.folder_uuid+'/'+str(int(time.time()))+'.png')
-
     
+    #start making modificatons
+    browser.execute_script('monkeyTest.performTestWithSelector("blah", "eek")');
+    time.sleep(1)
+
+
+    browser.save_screenshot(SCREENSHOT_DIRECTORY+'/'+self.folder_uuid+'/'+str(int(time.time()))+'.png')
     
     #browser.quit()
     self.stop_server();

@@ -1,25 +1,24 @@
 var monkey_test = function () {
   return {
+    
+    /*
+     * elements will store a cached list of DOM Elements
+     * this is used to decrease time it will take to make
+     * changes to the DOM (i.e. not traverse to find the 
+     * element that needs to be changed)
+     */
+    elements: null,
 
     init: function () {
-      var x = document.getElementById('blah');
-      x.innerHTML = "sdfsdfsdf"
+      this.elements = []
     },
     
-    performTestWithSelector: function () {
-    
+    performTestWithSelector: function (id, newContent) {
+      var element = document.getElementById(id);
+      element.innerHTML = newContent;
     }
   }
 }
 
-monkeyTest = new monkey_test().init();
-
-/*
-function monkey_test (selector) {
-  var elem = document.querySelector(selector);
-  var tests = [test1, test2, test3];
-  for(var i = 0; i < tests.length; i++) {
-    tests[i](selector);
-  }
-}
-*/
+monkeyTest = new monkey_test();
+monkeyTest.init()
