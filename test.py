@@ -11,6 +11,9 @@ import threading
 
 SCREENSHOT_DIRECTORY = "screenshots"
 URL_TO_TEST = 'http://jsfiddle.net/EtW7d/show/'
+URL_TO_TEST = "http://en.wikipedia.org/wiki/Y_Combinator_(company)"
+SELECTOR_TO_TEST = "firstHeading"
+CONTENT_TEST = ['hello', 'something', 'else', 'goes', 'here']
 
 class UITest:
   
@@ -42,11 +45,11 @@ class UITest:
     browser.execute_script(script_inc)
     
     #start making modificatons
-    browser.execute_script('monkeyTest.performTestWithSelector("blah", "eek")');
-    time.sleep(1)
-
-
-    browser.save_screenshot(SCREENSHOT_DIRECTORY+'/'+self.folder_uuid+'/'+str(int(time.time()))+'.png')
+    print CONTENT_TEST 
+    for content in CONTENT_TEST:
+      browser.execute_script('monkeyTest.performTestWithSelector("'+SELECTOR_TO_TEST+'", "'+content+'")');
+      time.sleep(1)
+      browser.save_screenshot(SCREENSHOT_DIRECTORY+'/'+self.folder_uuid+'/'+str(int(time.time()))+'.png')
     
     #browser.quit()
     self.stop_server();
